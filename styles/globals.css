@@ -1,16 +1,20 @@
-html,
-body {
-  padding: 0;
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base{
+    h1{
+        font-size:40px;
+        font-weight: bold;
+    }
 }
 
-a {
-  color: inherit;
-  text-decoration: none;
+@layer components{
+    body {
+        color: white;
+    }
 }
 
-* {
-  box-sizing: border-box;
+.chatbox-bg{
+    background: url('../public/bg.svg');
 }
