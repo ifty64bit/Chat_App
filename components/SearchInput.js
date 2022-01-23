@@ -7,14 +7,18 @@ function SearchInput(props) {
     const { data: session, status } = useSession();
     const [input, setInput] = useState("");
     const [userList, setUserList] = useState([]);
-    console.log(session);
+    console.log(session.user);
     const onInput = (e) => {
         setInput(e.target.value); 
     }
 
-    const getRoomId = async (userEmail) => {    //get buddy's email as parm
+    const getRoomId = async (user) => {    //get buddy's email as parm
+        console.log(user);
         try {
-            let room = await axios.get(`/api/getroomid/${userEmail}&${session.user.email}`);
+            let room = await axios.post(`/api/getroomid`, {
+                'user1' : user,
+                'user2' : session.user
+            });
             console.log(room);
         } catch (error) {
             console.log(error);
@@ -57,7 +61,7 @@ function SearchInput(props) {
                     userList.map((user) => {
                         if(user.name===session.user.name) return
                         return (
-                            <li key={user.id} className='py-2 cursor-pointer' onClick={ ()=> getRoomId(user.email) }>
+                            <li key={user.id} className='py-2 cursor-pointer' onClick={ ()=> getRoomId(user) }>
                                 <div className='flex justify-start gap-x-4 items-center' >
                                     <Image className='rounded-full' src={user.image} alt='user' width='30px' height='30px' />
                                     {user.name}

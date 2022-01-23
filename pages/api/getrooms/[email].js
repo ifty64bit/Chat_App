@@ -1,6 +1,8 @@
 import { getSession } from "next-auth/react"
 import dbConnect from '../../../lib/dbConnect';
-import rooms from "../../../models/rooms";
+import Rooms from "../../../models/rooms";
+
+
 
 export default async function handler(req, res) {
   const session = await getSession({ req });
@@ -9,15 +11,17 @@ export default async function handler(req, res) {
     res.status('401').send("Unauthorized");
     return
   }
-  
+
   try {
     await dbConnect()
-    const email = req.query.email;
-    const room = await rooms.find({ 'participants': email });
+    const email = await req.query.email;
+    const room = await Rooms.find({ 'participants': email }).populate('participants');
     console.log(room);
     res.json(room);
-    }   catch (error) {
-    console.log(error);
+  }
+
+  catch (error) {
+    console.log("Rooms ",error);
     res.status('500');
     }
 }
