@@ -1,4 +1,4 @@
-import { getSession } from "next-auth/react";
+/*import { getSession } from "next-auth/react";
 import dbConnect from "../../../lib/dbConnect";
 import Rooms from "../../../models/rooms";
 import Users from "../../../models/users";
@@ -12,8 +12,6 @@ export default async function handler(req, res) {
 
   try {
     await dbConnect();
-    console.log("\n \n \n");
-    console.log(req.query);
     //Finfing Existing Room
     const room = await Rooms.find({
       $and: [{ participants: user1.email }, { participants: user2.email }],
@@ -34,4 +32,4 @@ export default async function handler(req, res) {
     console.log(error);
     res.status("500");
   }
-}
+}*/

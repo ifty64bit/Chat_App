@@ -1,6 +1,7 @@
 import { getSession } from "next-auth/react"
 import dbConnect from '../../../lib/dbConnect';
 import Rooms from "../../../models/rooms";
+import Users from "../../../models/users";
 
 
 
@@ -14,14 +15,13 @@ export default async function handler(req, res) {
 
   try {
     await dbConnect()
-    const email = await req.query.email;
-    const room = await Rooms.find({ 'participants': email }).populate('participants');
-    console.log(room);
+    const id = await req.query.id;
+    const room = await Rooms.find({ 'participants': id }).populate('participants');
     res.json(room);
   }
 
   catch (error) {
-    console.log("Rooms ",error);
+    console.log("Error From getRooms=>[id] ",error);
     res.status('500');
     }
 }

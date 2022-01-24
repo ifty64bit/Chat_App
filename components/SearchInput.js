@@ -7,13 +7,11 @@ function SearchInput(props) {
     const { data: session, status } = useSession();
     const [input, setInput] = useState("");
     const [userList, setUserList] = useState([]);
-    console.log(session.user);
     const onInput = (e) => {
         setInput(e.target.value); 
     }
 
-    const getRoomId = async (user) => {    //get buddy's email as parm
-        console.log(user);
+    /*const getRoomId = async (user) => {    //get buddy's email as parm
         try {
             let room = await axios.post(`/api/getroomid`, {
                 'user1' : user,
@@ -23,7 +21,7 @@ function SearchInput(props) {
         } catch (error) {
             console.log(error);
         }
-    }
+    }*/
 
     //Clear input with delay
     const clear = () => {
@@ -56,12 +54,12 @@ function SearchInput(props) {
                 onBlur={clear}
                 value={input} />
             
-            <ul className='absolute bg-gray-500 w-full px-2'>
+            <ul className='absolute bg-gray-500 w-full px-2 z-50'>
                 {
                     userList.map((user) => {
                         if(user.name===session.user.name) return
                         return (
-                            <li key={user.id} className='py-2 cursor-pointer' onClick={ ()=> getRoomId(user) }>
+                            <li key={user._id} className='py-2 cursor-pointer' onClick={ ()=> props.getRoomId(user) }>
                                 <div className='flex justify-start gap-x-4 items-center' >
                                     <Image className='rounded-full' src={user.image} alt='user' width='30px' height='30px' />
                                     {user.name}

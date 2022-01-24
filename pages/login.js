@@ -1,10 +1,8 @@
 import { useSession, signIn, signOut } from "next-auth/react"
 import Link from "next/link";
 
-export default function login(props) {
+export default function login() {
     const { data: session, status } = useSession()
-    console.log(session);
-    console.log(props);
     if (session) {
         return (
             <>
@@ -18,17 +16,6 @@ export default function login(props) {
         <div className=" bg-gray-800">
             Not signed in <br />
             <button onClick={() => signIn()}>Sign in</button>
-            <div>
-                URL is: {process.env.DATABASE_URL}
-            </div>
         </div>
     )
 }
-
-export async function getServerSideProps(context) {
-    
-    return {
-        props: { url:process.env.DATABASE_URL
-    }, // will be passed to the page component as props
-    }
-  }

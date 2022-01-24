@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import Users from "./users";
 
 /* PetSchema will correspond to a collection in your MongoDB database. */
 const rooms = new mongoose.Schema({
