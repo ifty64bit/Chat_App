@@ -10,7 +10,6 @@ function Sidebar(props) {
 
     const getRoomId = async (user) => {    //get buddy's email as parm
         try {
-            console.log(user);
             const hasRoom = rooms.find(_r => {
                 if ((_r.participants[0]._id == user._id) || (_r.participants[1]._id == user._id)) return _r;
             })
@@ -33,7 +32,7 @@ function Sidebar(props) {
         }
     }
     return (
-        <div className='bg-slate-700 col-span-3 px-2'>
+        <div className='bg-slate-700 w-[30%] px-2'>
             <SearchInput placeholder="Search" getRoomId={ getRoomId } />
             {
                 rooms.length == 0 ? "" :

@@ -35,7 +35,7 @@ export default function Home({rooms}) {
   return (
     <div>
       {session ? (
-        <div className="grid grid-cols-12 h-[calc(100vh-11.3vh)] overflow-hidden text-lg">
+        <div className=" flex h-[calc(100vh-11.3vh)] overflow-hidden text-lg">
           <Sidebar rooms={ JSON.parse(rooms) } changeCurrentRoom={ changeCurrentRoom }/>
           <Chatbox currentRoom={currentRoom} socket={ socket }/>
         </div>

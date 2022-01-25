@@ -11,18 +11,6 @@ function SearchInput(props) {
         setInput(e.target.value); 
     }
 
-    /*const getRoomId = async (user) => {    //get buddy's email as parm
-        try {
-            let room = await axios.post(`/api/getroomid`, {
-                'user1' : user,
-                'user2' : session.user
-            });
-            console.log(room);
-        } catch (error) {
-            console.log(error);
-        }
-    }*/
-
     //Clear input with delay
     const clear = () => {
         const tOut = setTimeout(() => setInput(""), 500);
@@ -36,7 +24,6 @@ function SearchInput(props) {
         const getData = async () => {
             try {
                 let users = await axios.get(`/api/search/${input}`);
-                console.log(users);
                 setUserList(users.data)
             } catch (error) {
                 console.log(error);

@@ -6,9 +6,11 @@ export default function login() {
     if (session) {
         return (
             <>
-                Signed in as {session.user.email} <br />
-                <button onClick={() => signOut()}>Sign out</button>
-                <Link href='/'>Go Home</Link>
+                <div className=" bg-gray-800">
+                    Signed in as {session.user.email} <br />
+                    <button onClick={() => signOut()}>Sign out</button>
+                    <Link href='/'>Go Home</Link>
+                </div>
             </>
         )
     }
