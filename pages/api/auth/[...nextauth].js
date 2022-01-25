@@ -36,7 +36,7 @@ export default NextAuth({
     },
     redirect() {
       
-      return "https://chat-app-acpobpwwv-ifty64bit.vercel.app";
+      return process.env.SITE_URL;
     },
     async session({ session, token, user }) {
       session.user._id = user.id;
