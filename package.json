@@ -8,8 +8,7 @@
     "lint": "next lint"
   },
   "engines": {
-    "node": "17.x",
-    "npm": "8.x"
+    "node": "17.x"
   },
   "dependencies": {
     "@next-auth/mongodb-adapter": "^1.0.1",

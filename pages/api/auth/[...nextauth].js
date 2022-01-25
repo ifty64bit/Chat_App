@@ -34,10 +34,7 @@ export default NextAuth({
     async signIn({ user, account, profile, email, credentials }) {
       return true;
     },
-    redirect() {
-      
-      return process.env.SITE_URL;
-    },
+    
     async session({ session, token, user }) {
       session.user._id = user.id;
       return session;
