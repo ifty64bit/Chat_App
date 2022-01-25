@@ -49,7 +49,7 @@ function Chatbox({ currentRoom, socket }) {
     return (
         <>
         <div className=' flex flex-col bg-slate-400 chatbox-bg pl-4 py-2  grow h-full'>
-            <div className='flex flex-col mt-auto gap-y-4 overflow-y-scroll scroll-smooth h-full pb-2 mb-[4.5rem]'>
+            <div className='flex flex-col mt-auto gap-y-4 overflow-y-scroll scroll-smooth h-full pb-2 pr-4 mb-[4.5rem]'>
                 {
                     chats.length == 0 ?
                         <div className='w-full flex justify-center' >No Messages</div>

@@ -36,7 +36,7 @@ export default NextAuth({
     },
     redirect() {
       
-      return "http://localhost:3000"
+      return process.env.NEXT_URL;
     },
     async session({ session, token, user }) {
       session.user._id = user.id;

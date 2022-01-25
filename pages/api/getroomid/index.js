@@ -39,7 +39,5 @@ export default async function handler(req, res) {
       console.log("getRoomID => Index\n",error);
       res.status("500");
     }
-  } else if (req.method === "GET") {
-    
   }
 }

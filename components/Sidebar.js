@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import Image from 'next/image';
-import { useSession, getSession } from "next-auth/react"
+import { useSession } from "next-auth/react"
 import SearchInput from './SearchInput'
 import axios from 'axios';
 
@@ -38,20 +38,20 @@ function Sidebar(props) {
                 rooms.length == 0 ? "" :
                 rooms.map((room) => {
                     return (
-                        <div key={room._id} onClick={ ()=> props.changeCurrentRoom(room)}  className='text-lg px-2 py-2 bg-slate-400 rounded-md flex gap-3 items-center cursor-pointer transition-colors hover:bg-slate-800'>
+                        <div key={room._id} onClick={ ()=> props.changeCurrentRoom(room)}  className='text-lg px-2 py-2 bg-slate-400 rounded-md flex gap-3 items-center justify-center lg:justify-start cursor-pointer transition-colors hover:bg-slate-800'>
                             {
                                 session.user.email === room.participants[0].email ?
                                     (
                                         <>
                                             <Image className=' rounded-full' src={room.participants[1].image} width="50" height="50" alt="user" />
-                                            <div>{room.participants[1].name}</div>
+                                            <div className='hidden lg:block'>{room.participants[1].name}</div>
                                         </>
                                     )
                                 :
                                 (
                                     <>
                                         <Image className=' rounded-full' src={room.participants[0].image} width="50" height="50" alt="user" />
-                                        <div>{room.participants[0].name}</div>
+                                        <div className='hidden lg:block'>{room.participants[0].name}</div>
                                     </>
                                 )
                             }

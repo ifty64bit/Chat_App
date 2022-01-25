@@ -1,5 +1,5 @@
-import { useSession, getSession, signOut } from "next-auth/react"
-import { useEffect, useState, useRef, useCallback } from "react";
+import { useSession, getSession } from "next-auth/react"
+import { useEffect, useState} from "react";
 import Link from 'next/link';
 import Sidebar from "../components/Sidebar";
 import Chatbox from "../components/Chatbox";
@@ -7,7 +7,7 @@ import dbConnect from '../lib/dbConnect';
 import Rooms from "../models/rooms";
 import { io } from "socket.io-client";
 
-const socket=io("http://localhost:3001", { query: "roomID=room1" });
+const socket=io(process.env.socketURL, { query: "roomID=room1" });
 
 
 export default function Home({rooms}) {
@@ -35,7 +35,7 @@ export default function Home({rooms}) {
   return (
     <div>
       {session ? (
-        <div className=" flex h-[calc(100vh-11.3vh)] overflow-hidden text-lg">
+        <div className="flex h-[calc(100vh-11.3vh)] overflow-hidden text-lg">
           <Sidebar rooms={ JSON.parse(rooms) } changeCurrentRoom={ changeCurrentRoom }/>
           <Chatbox currentRoom={currentRoom} socket={ socket }/>
         </div>
@@ -60,6 +60,6 @@ export async function getServerSideProps(context) {
     props:
     {
       session, 'rooms':JSON.stringify(rooms)
-    }, // will be passed to the page component as props
+    },
   }
 }
