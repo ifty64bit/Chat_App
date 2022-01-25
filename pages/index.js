@@ -1,22 +1,35 @@
 import { useSession, getSession, signOut } from "next-auth/react"
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef, useCallback } from "react";
 import Link from 'next/link';
 import Sidebar from "../components/Sidebar";
 import Chatbox from "../components/Chatbox";
 import dbConnect from '../lib/dbConnect';
 import Rooms from "../models/rooms";
+import { io } from "socket.io-client";
+
+const socket=io("http://localhost:3001", { query: "roomID=room1" });
 
 
 export default function Home({rooms}) {
   const { data: session, status } = useSession();
   const [currentRoom, setCurrentRoom] = useState({});
 
+
   useEffect(() => {
-    JSON.parse(rooms).length == 0 ? setCurrentRoom(null) : setCurrentRoom(JSON.parse(rooms)[0]);
+    if (JSON.parse(rooms).length == 0)
+    {
+      setCurrentRoom(null);
+    }
+    else {
+      setCurrentRoom(JSON.parse(rooms)[0]);
+      socket.emit('join-room', JSON.parse(rooms)[0]._id);
+    }
+    
   }, [rooms]);
   
   const changeCurrentRoom = (_room) => {
     setCurrentRoom(_room);
+    socket.emit('join-room', _room._id)
   }
 
   return (
@@ -24,7 +37,7 @@ export default function Home({rooms}) {
       {session ? (
         <div className="grid grid-cols-12 h-[calc(100vh-11.3vh)] overflow-hidden text-lg">
           <Sidebar rooms={ JSON.parse(rooms) } changeCurrentRoom={ changeCurrentRoom }/>
-          <Chatbox currentRoom={ currentRoom }/>
+          <Chatbox currentRoom={currentRoom} socket={ socket }/>
         </div>
         )
         :

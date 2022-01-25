@@ -18,3 +18,7 @@
 .chatbox-bg{
     background: url('../public/bg.svg');
 }
+
+.inherit{
+    width:inherit
+}

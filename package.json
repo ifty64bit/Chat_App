@@ -18,7 +18,8 @@
     "next-auth": "^4.1.2",
     "react": "17.0.2",
     "react-dom": "17.0.2",
-    "react-icons": "^4.3.1"
+    "react-icons": "^4.3.1",
+    "socket.io-client": "^4.4.1"
   },
   "devDependencies": {
     "@swc/cli": "^0.1.55",

@@ -3,7 +3,7 @@ import { useSession } from 'next-auth/react';
 import { useState, useEffect } from 'react';
 import ChatInput from './ChatInput';
 
-function Chatbox({ currentRoom }) {
+function Chatbox({ currentRoom, socket }) {
     const { data: session, status } = useSession();
     const [chats, setChats] = useState([]);
     
@@ -15,10 +15,17 @@ function Chatbox({ currentRoom }) {
             'roomID': currentRoom._id
         }
         const res = await axios.post(`/api/messages`, message)
+        socket.emit('message', {
+            ...message, sender: { 'email': session.user.email }, _id: res.data._id
+        });
         setChats([...chats, { ...message, sender:{'email': session.user.email}, _id: res.data._id }])    //destracuring message obj and push sender , id proparty
     }
 
     useEffect(() => {
+        //reg socket for event
+        
+        
+
         const fetchMessage = async () => {
             if (currentRoom._id == undefined) return;
             const response = await axios.get(`/api/messages/${currentRoom._id}`)
@@ -26,11 +33,18 @@ function Chatbox({ currentRoom }) {
             setChats([...messages]);
         }
         fetchMessage();
+        socket.on('message', (_message) => {
+            setChats( prev => [...prev, _message]);
+        })
+        return function cleanup() {
+            socket.off('message');
+          };
 
-    },[currentRoom])
+    },[currentRoom,socket])
 
     return (
-        <div className=' bg-slate-400 col-span-9 relative chatbox-bg px-4 py-2 overflow-scroll'>
+        <>
+        <div className=' bg-slate-400 col-span-9 relative chatbox-bg px-4 py-2 overflow-y-scroll w-full h-full'>
             <div className='flex flex-col gap-y-4'>
                 {
                     chats.length == 0 ?
@@ -47,6 +61,8 @@ function Chatbox({ currentRoom }) {
             </div>
             <ChatInput sendMsg={ sendMsg }/>
         </div>
+            
+        </>
     )
 }
 
