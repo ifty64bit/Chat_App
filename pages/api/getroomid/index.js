@@ -25,6 +25,7 @@ export default async function handler(req, res) {
           participants: [user1._id, user2._id],
           createdBy: user2._id,
         });
+        
         //below code will save room and populate user data
         await newRoom.save((err, r) => {
           r.populate('participants').
