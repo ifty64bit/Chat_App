@@ -7,7 +7,7 @@ import dbConnect from '../lib/dbConnect';
 import Rooms from "../models/rooms";
 import { io } from "socket.io-client";
 
-const socket=io(process.env.socketURL, { query: "roomID=room1", 'reconnectionAttempts': 5 });
+const socket=io("https://infinite-sands-58303.herokuapp.com", { query: "roomID=room1", 'reconnectionAttempts': 5 });
 
 
 export default function Home({rooms}) {
