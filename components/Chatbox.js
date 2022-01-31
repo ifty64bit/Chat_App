@@ -1,4 +1,5 @@
 import axios from 'axios';
+import Image from 'next/image';
 import { useSession } from 'next-auth/react';
 import { useState, useEffect, useRef } from 'react';
 import ChatInput from './ChatInput';
@@ -6,7 +7,7 @@ import ChatInput from './ChatInput';
 function Chatbox({ currentRoom, socket }) {
     const { data: session, status } = useSession();
     const [chats, setChats] = useState([]);
-    const lastMsg= useRef(null)
+    const lastMsg = useRef(null);
     
     
     const sendMsg = async (text) => {
@@ -48,9 +49,26 @@ function Chatbox({ currentRoom, socket }) {
 
     return (
         <>
-        <div className=' flex flex-col bg-slate-400 chatbox-bg pl-4 py-2  grow h-full'>
-            <div className='flex flex-col mt-auto gap-y-4 overflow-y-scroll scroll-smooth h-full pb-2 pr-4 mb-[4.5rem]'>
+            <div className=' flex flex-col bg-slate-400 chatbox-bg grow h-full'>
                 {
+                    Object.keys(currentRoom).length==0 ? "" : 
+                        <div className='py-2 px-4 flex items-center bg-slate-800'>
+                            {
+                                currentRoom.participants[0].email === session.user.email ?
+                                    <>
+                                        <Image className=' rounded-full' src={currentRoom.participants[1].image} width="50" height="50" alt="user" />
+                                        <div className='ml-4'>{ currentRoom.participants[1].name }</div>
+                                    </>
+                                :
+                                    <>
+                                        <Image className=' rounded-full' src={currentRoom.participants[0].image} width="50" height="50" alt="user" />
+                                        <div className='ml-4'>{ currentRoom.participants[0].name }</div>
+                                    </>
+                            }
+                        </div>
+                }
+                <div className='flex flex-col mt-auto gap-y-4 overflow-y-scroll scroll-smooth h-full pb-2 px-4 mb-[4.5rem]'>
+                    {
                     chats.length == 0 ?
                         <div className='w-full flex justify-center' >No Messages</div>
                         :
@@ -61,10 +79,10 @@ function Chatbox({ currentRoom, socket }) {
                                 </div>
                             )
                         })
-                }
+                    }
+                </div>
+                <ChatInput sendMsg={ sendMsg }/>
             </div>
-            <ChatInput sendMsg={ sendMsg }/>
-        </div>
             
         </>
     )

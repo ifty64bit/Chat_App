@@ -1,8 +1,10 @@
-import { useState } from 'react'
+import { useState, } from 'react'
 import Image from 'next/image';
 import { useSession } from "next-auth/react"
 import SearchInput from './SearchInput'
+import { IoIosArrowForward } from 'react-icons/io';
 import axios from 'axios';
+import { IconContext } from 'react-icons/lib';
 
 function Sidebar(props) {
     const { data: session, status } = useSession();
@@ -32,8 +34,9 @@ function Sidebar(props) {
         }
     }
     return (
-        <div className='bg-slate-700 w-[30%] px-2'>
+        <div className="bg-slate-700 w-[80%] md:w-[30%] px-2 overflow-y-scroll overflow-x-hidden">
             <SearchInput placeholder="Search" getRoomId={ getRoomId } />
+            <div>
             {
                 rooms.length == 0 ? "" :
                 rooms.map((room) => {
@@ -59,6 +62,7 @@ function Sidebar(props) {
                     )
                 })
             }
+            </div>
         </div>
     )
 }

@@ -1,5 +1,5 @@
 import { useSession, getSession } from "next-auth/react"
-import { useEffect, useState} from "react";
+import { useEffect, useState, useRef} from "react";
 import Link from 'next/link';
 import Sidebar from "../components/Sidebar";
 import Chatbox from "../components/Chatbox";
@@ -13,6 +13,7 @@ const socket=io("https://infinite-sands-58303.herokuapp.com", { query: "roomID=r
 export default function Home({rooms}) {
   const { data: session, status } = useSession();
   const [currentRoom, setCurrentRoom] = useState({});
+  const body = useRef(null);
 
 
   useEffect(() => {
@@ -24,7 +25,17 @@ export default function Home({rooms}) {
       setCurrentRoom(JSON.parse(rooms)[0]);
       socket.emit('join-room', JSON.parse(rooms)[0]._id);
     }
-    
+
+    //Change Height on Resize
+    let l = window.innerHeight - document.getElementById("header").offsetHeight + "px";
+    body.current.style.height = l;
+    window.addEventListener('resize', (e) => {
+      body.current.style.height = window.innerHeight - document.getElementById("header").offsetHeight + "px";
+    }
+    );
+    return () => {
+      window.removeEventListener('resize', (e) => { return } );
+    }
   }, [rooms]);
   
   const changeCurrentRoom = (_room) => {
@@ -35,7 +46,7 @@ export default function Home({rooms}) {
   return (
     <div>
       {session ? (
-        <div className="flex h-[calc(100vh-11.3vh)] overflow-hidden text-lg">
+        <div className="flex  overflow-hidden text-lg relative" ref={body}>
           <Sidebar rooms={ JSON.parse(rooms) } changeCurrentRoom={ changeCurrentRoom }/>
           <Chatbox currentRoom={currentRoom} socket={ socket }/>
         </div>

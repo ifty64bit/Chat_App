@@ -33,7 +33,7 @@ function SearchInput(props) {
     }, [input]);
     
     return (
-        <div className='relative'>
+        <div className='relative hidden md:block'>
             <input className='w-full border-2 border-black rounded-md p-2 text-black'
                 type="text"
                 placeholder={props.placeholder}
