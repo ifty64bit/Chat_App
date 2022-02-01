@@ -12,7 +12,7 @@ const socket=io("https://infinite-sands-58303.herokuapp.com", { query: "roomID=r
 
 export default function Home({rooms}) {
   const { data: session, status } = useSession();
-  const [currentRoom, setCurrentRoom] = useState({});
+  const [currentRoom, setCurrentRoom] = useState(null);
   const body = useRef(null);
 
 
